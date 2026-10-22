@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>LED Banner — Digital Advertisement Board</title>
+  
+  <!-- SEO & Mobile Optimization -->
+  <meta name="description" content="Customizable LED Banner & Digital Marquee Display web application featuring real-time text updates, seamless infinite scrolling, neon glow effects, typography presets, and fullscreen presentation mode.">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Favicon (Inline SVG to avoid missing resource 404) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+
+  <!-- Web Fonts: Trending Viral Fonts + Retro + Pixel -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@400;700;900&family=Monoton&family=Orbitron:wght@900&family=Press+Start+2P&family=Righteous&family=Russo+One&display=swap" rel="stylesheet">
+
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Floating Eye Button (Visible when controls are hidden) -->
+  <button id="floatingEyeBtn" class="floating-eye-btn hidden" title="Show Control Panel" aria-label="Show Control Panel">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+      <circle cx="12" cy="12" r="3"></circle>
+    </svg>
+  </button>
+
+  <!-- Top Control Panel -->
+  <div class="controls-bar" id="controlsBar">
+    <!-- Message Text Input -->
+    <div class="input-group">
+      <input type="text" id="textInput" class="text-input" value="WELCOME" placeholder="Type message..." autocomplete="off">
+    </div>
+
+    <div class="options-group">
+      <!-- Background Color Picker -->
+      <div class="control-item">
+        <span class="control-label">BG</span>
+        <input type="color" id="bgColor" class="color-picker" value="#000000" title="Background Color">
+      </div>
+
+      <!-- Text Color Picker -->
+      <div class="control-item">
+        <span class="control-label">Text</span>
+        <input type="color" id="textColor" class="color-picker" value="#ffffff" title="Text Color">
+      </div>
+
+      <!-- Font Style Selector -->
+      <div class="control-item">
+        <span class="control-label">Font</span>
+        <select id="fontSelect" class="control-select">
+          <option value="font-bold" selected>Bold</option>
+          <option value="font-cyber">Cyber Tech</option>
+          <option value="font-neon">Neon Stripe</option>
+          <option value="font-russo">Heavy Impact</option>
+          <option value="font-synth">Synthwave</option>
+          <option value="font-normal">Normal</option>
+          <option value="font-retro">Retro</option>
+          <option value="font-pixel">Pixel</option>
+        </select>
+      </div>
+
+      <!-- Scrolling Speed Selector -->
+      <div class="control-item">
+        <span class="control-label">Speed</span>
+        <select id="speedSelect" class="control-select">
+          <option value="2.0">2.0x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.2">1.2x</option>
+          <option value="1.0" selected>1.0x</option>
+          <option value="0.9">0.9x</option>
+          <option value="0.8">0.8x</option>
+          <option value="0.7">0.7x</option>
+          <option value="0.6">0.6x</option>
+          <option value="0.5">0.5x</option>
+        </select>
+      </div>
+
+      <!-- Text Size % Selector -->
+      <div class="control-item">
+        <span class="control-label">Size</span>
+        <select id="sizeSelect" class="control-select">
+          <option value="200">200%</option>
+          <option value="150">150%</option>
+          <option value="125">125%</option>
+          <option value="110">110%</option>
+          <option value="100" selected>100%</option>
+          <option value="90">90%</option>
+          <option value="80">80%</option>
+          <option value="70">70%</option>
+          <option value="50">50%</option>
+        </select>
+      </div>
+
+      <!-- LED Glow / Pulse Toggle -->
+      <button id="glowToggleBtn" class="icon-btn-toggle" title="Toggle LED Glow" aria-label="Toggle LED Glow">
+        ⚡ Glow
+      </button>
+
+      <!-- Hide Controls Eye Button -->
+      <button id="hidePanelBtn" class="icon-btn-eye" title="Hide Controls" aria-label="Hide Controls">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+          <line x1="1" y1="1" x2="23" y2="23"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Digital Display Banner Screen (Double-tap for Fullscreen) -->
+  <div class="banner-screen" id="bannerScreen" title="Double-tap for Fullscreen">
+    <div class="marquee-track" id="marqueeTrack">
+      <div class="marquee-item font-bold" id="item1">WELCOME</div>
+      <div class="marquee-item font-bold" id="item2">WELCOME</div>
+    </div>
+  </div>
+
+  <!-- External JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>

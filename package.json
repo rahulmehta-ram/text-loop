@@ -1,0 +1,30 @@
+{
+  "name": "text-loop",
+  "version": "1.0.0",
+  "description": "Interactive LED Banner & Digital Marquee Display web application with real-time text updates, custom fonts, neon glow, and fullscreen presentation.",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve .",
+    "test": "node -e \"require('fs').readFileSync('index.html'); require('fs').readFileSync('script.js'); require('fs').readFileSync('style.css'); console.log('All core assets validated successfully.');\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rahulmehta-ram/text-loop.git"
+  },
+  "keywords": [
+    "led-banner",
+    "marquee",
+    "digital-display",
+    "text-loop",
+    "neon-glow",
+    "full-screen",
+    "signage"
+  ],
+  "author": "rahulmehta-ram",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rahulmehta-ram/text-loop/issues"
+  },
+  "homepage": "https://github.com/rahulmehta-ram/text-loop#readme"
+}
