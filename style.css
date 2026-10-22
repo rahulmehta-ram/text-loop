@@ -9,6 +9,7 @@ html,
 body {
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   background-color: #000000;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -27,7 +28,7 @@ body {
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 10px 16px;
+  padding: max(10px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 10px max(16px, env(safe-area-inset-left));
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
@@ -194,8 +195,8 @@ body {
 /* Floating Eye Button in Glassmorphism Style */
 .floating-eye-btn {
   position: fixed;
-  top: 14px;
-  right: 14px;
+  top: max(14px, env(safe-area-inset-top));
+  right: max(14px, env(safe-area-inset-right));
   z-index: 100;
   background: rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(12px);
@@ -241,12 +242,154 @@ body {
   cursor: pointer;
 }
 
+/* Marquee Rotator Wrapper (Handles 90°/270° orientation rotation without conflicting with keyframe translation) */
+.marquee-rotator {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  overflow: visible;
+  pointer-events: none;
+  transform-origin: center center;
+}
+
+/* Mode: Horizontal (Standard Desktop & Landscape) */
+.banner-screen.mode-horizontal {
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.banner-screen.mode-horizontal .marquee-rotator {
+  width: 100%;
+  height: 100%;
+  transform: none;
+}
+
+.banner-screen.mode-horizontal .marquee-track {
+  display: flex;
+  flex-direction: row;
+  white-space: nowrap;
+  animation-name: scrollMarqueeHoriz;
+}
+
+.banner-screen.mode-horizontal .marquee-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 1.2em;
+  padding-bottom: 0;
+  white-space: nowrap;
+}
+
+/* Mode: Rotate 90° Clockwise (Optimized for holding phone vertically in hand) */
+.banner-screen.mode-rotate90 {
+  justify-content: center;
+  align-items: center;
+}
+
+.banner-screen.mode-rotate90 .marquee-rotator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.banner-screen.mode-rotate90 .marquee-track {
+  display: flex;
+  flex-direction: row;
+  white-space: nowrap;
+  animation-name: scrollMarqueeHoriz;
+}
+
+.banner-screen.mode-rotate90 .marquee-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 1.2em;
+  padding-bottom: 0;
+  white-space: nowrap;
+}
+
+/* Mode: Rotate 270° Counter-Clockwise (Reverse hand hold) */
+.banner-screen.mode-rotate270 {
+  justify-content: center;
+  align-items: center;
+}
+
+.banner-screen.mode-rotate270 .marquee-rotator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+.banner-screen.mode-rotate270 .marquee-track {
+  display: flex;
+  flex-direction: row;
+  white-space: nowrap;
+  animation-name: scrollMarqueeHoriz;
+}
+
+.banner-screen.mode-rotate270 .marquee-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 1.2em;
+  padding-bottom: 0;
+  white-space: nowrap;
+}
+
+/* Mode: Vertical Scroll (Bottom to Top Upward Marquee) */
+.banner-screen.mode-vertical {
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.banner-screen.mode-vertical .marquee-rotator {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  transform: none;
+}
+
+.banner-screen.mode-vertical .marquee-track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  animation-name: scrollMarqueeVert;
+}
+
+.banner-screen.mode-vertical .marquee-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-right: 0;
+  padding-bottom: 1.5em;
+  padding-top: 0.5em;
+  width: 100%;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.15;
+}
+
+.vertical-msg-block {
+  padding: 0.4em 0;
+  width: 100%;
+  display: block;
+}
+
 /* Seamless Infinite Marquee Track */
 .marquee-track {
   display: flex;
-  white-space: nowrap;
   will-change: transform;
-  animation: scrollMarquee 8s linear infinite;
+  animation: scrollMarqueeHoriz 8s linear infinite;
   pointer-events: none;
   /* Allows double taps on text to bubble to banner-screen */
 }
@@ -256,9 +399,7 @@ body {
   align-items: center;
   justify-content: center;
   padding-right: 1.2em;
-  /* Gap between loop repetitions */
   line-height: 1;
-  white-space: nowrap;
   transition: text-shadow 0.3s;
   pointer-events: none;
 }
@@ -318,12 +459,67 @@ body {
 }
 
 /* Continuous Infinite Scroll Keyframes */
+@keyframes scrollMarqueeHoriz {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scrollMarqueeVert {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
 @keyframes scrollMarquee {
   0% {
     transform: translateX(0%);
   }
-
   100% {
     transform: translateX(-50%);
+  }
+}
+
+/* Mobile & Portrait Screen Optimization */
+@media (max-width: 768px) {
+  .controls-bar {
+    padding: max(8px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) 8px max(10px, env(safe-area-inset-left));
+    gap: 8px;
+  }
+
+  .input-group {
+    flex: 1 1 100%;
+  }
+
+  .options-group {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 6px;
+  }
+
+  .control-item {
+    padding: 3px 8px;
+  }
+
+  .text-input,
+  .control-select {
+    font-size: 16px; /* Avoid iOS Safari automatic zoom on focus */
+  }
+
+  .control-label {
+    font-size: 0.68rem;
+  }
+
+  .floating-eye-btn {
+    top: max(10px, env(safe-area-inset-top));
+    right: max(10px, env(safe-area-inset-right));
+    width: 42px;
+    height: 42px;
   }
 }

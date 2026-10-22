@@ -1,7 +1,7 @@
 {
   "name": "text-loop",
-  "version": "1.0.0",
-  "description": "Interactive LED Banner & Digital Marquee Display web application with real-time text updates, custom fonts, neon glow, and fullscreen presentation.",
+  "version": "1.1.0",
+  "description": "Interactive LED Banner & Digital Marquee Display web application featuring auto mobile detection, vertical scrolling, 90° portrait rotation, custom fonts, neon glow, and fullscreen presentation.",
   "main": "index.html",
   "scripts": {
     "start": "npx serve .",
@@ -17,6 +17,8 @@
     "marquee",
     "digital-display",
     "text-loop",
+    "vertical-marquee",
+    "mobile-led-banner",
     "neon-glow",
     "full-screen",
     "signage"

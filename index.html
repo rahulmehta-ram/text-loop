@@ -50,6 +50,18 @@
         <input type="color" id="textColor" class="color-picker" value="#ffffff" title="Text Color">
       </div>
 
+      <!-- Orientation / Mode Selector -->
+      <div class="control-item">
+        <span class="control-label">Mode</span>
+        <select id="modeSelect" class="control-select" title="Display Orientation Mode">
+          <option value="auto" selected>Auto 📱</option>
+          <option value="rotate90">Rotate 90° ↻</option>
+          <option value="vertical">Vertical ↕</option>
+          <option value="horizontal">Horizontal ↔</option>
+          <option value="rotate270">Rotate 270° ↺</option>
+        </select>
+      </div>
+
       <!-- Font Style Selector -->
       <div class="control-item">
         <span class="control-label">Font</span>
@@ -114,9 +126,11 @@
 
   <!-- Digital Display Banner Screen (Double-tap for Fullscreen) -->
   <div class="banner-screen" id="bannerScreen" title="Double-tap for Fullscreen">
-    <div class="marquee-track" id="marqueeTrack">
-      <div class="marquee-item font-bold" id="item1">WELCOME</div>
-      <div class="marquee-item font-bold" id="item2">WELCOME</div>
+    <div class="marquee-rotator" id="marqueeRotator">
+      <div class="marquee-track" id="marqueeTrack">
+        <div class="marquee-item font-bold" id="item1">WELCOME</div>
+        <div class="marquee-item font-bold" id="item2">WELCOME</div>
+      </div>
     </div>
   </div>
 

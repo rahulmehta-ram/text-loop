@@ -1,15 +1,20 @@
 # Text Loop — LED Banner & Digital Marquee Display
 
-An interactive, responsive **Web Application** that transforms any browser, mobile phone, tablet, or external monitor into a digital LED marquee banner display.
+An interactive, responsive **Web Application** that transforms any web browser, smartphone, tablet, or external monitor into a digital LED marquee banner display.
 
-Built with clean Vanilla HTML5, modern CSS3 (featuring glassmorphism and keyframe animations), and lightweight JavaScript (ES6+). Zero build steps or external dependencies required.
+Built with clean Vanilla HTML5, modern CSS3 (featuring glassmorphism, dynamic viewport units, and hardware-accelerated keyframe animations), and lightweight JavaScript (ES6+). Zero build steps or external dependencies required.
 
 ---
 
 ## ⚡ Features
 
-- **Live Real-Time Text Input**: Instantaneous marquee text updates as you type.
-- **Seamless Infinite Marquee Loop**: Smooth CSS keyframe loop scrolling horizontally with auto-calculated duration based on text length and screen width.
+- **Live Real-Time Text Input**: Instantaneous marquee text updates as you type with automatic short-text repetition to prevent empty voids.
+- **Multiple Display & Orientation Modes**:
+  - **Auto 📱 (Mobile Auto-Detect)**: Automatically senses portrait orientation on mobile devices and enables 90° rotated display; switches to horizontal marquee on landscape and desktop screens.
+  - **Rotate 90° ↻ (Portrait Hold)**: Rotates the banner 90° clockwise along the long vertical edge of smartphones, creating a giant billboard-style sign when holding the phone upright in one hand (ideal for concerts, airport pickups, and sports events).
+  - **Vertical ↕ (Upward Marquee)**: Continuous bottom-to-top vertical scrolling marquee with dynamic word-width fitting.
+  - **Horizontal ↔ (Classic Marquee)**: Continuous left-to-right scrolling marquee across the screen width.
+  - **Rotate 270° ↺ (Reverse Portrait Hold)**: Rotates 270° (-90°) counter-clockwise for holding the phone with the opposite hand.
 - **Curated Typography Presets**:
   - **Bold** (Inter 900)
   - **Cyber Tech** (Orbitron 900)
@@ -19,11 +24,17 @@ Built with clean Vanilla HTML5, modern CSS3 (featuring glassmorphism and keyfram
   - **Normal** (Inter 400)
   - **Retro** (Bungee)
   - **Pixel** (Press Start 2P)
-- **Dynamic Viewport Auto-Fitting**: Automatically scales font size and line height proportionally to the viewport height for each font family to prevent vertical clipping.
+- **Dynamic Viewport Auto-Fitting**: Automatically scales font size and line height proportionally to the active screen dimensions and orientation presets to prevent clipping.
 - **Custom Color Palette**: Integrated native color pickers for background and text colors.
 - **Speed Multiplier**: Selectable scroll speeds from `0.5x` (slow) up to `2.0x` (fast).
 - **Text Scaling**: Adjustable text size from `50%` to `200%`.
 - **LED Neon Aura Glow Effect**: Toggleable multi-layered neon glow effect (`text-shadow`) that syncs with your selected text color.
+- **Mobile Screen Optimizations**:
+  - `100dvh` dynamic viewport unit support to eliminate mobile browser URL bar jitter.
+  - Safe-area insets (`env(safe-area-inset-top)`, `env(safe-area-inset-bottom)`) for iPhone notch and home indicators.
+  - 16px input font sizes preventing iOS Safari automatic focus zooming.
+  - Touch-optimized compact glassmorphic controls.
+- **Preference Persistence**: Automatically preserves your customized banner message, colors, font, mode, speed, and size in `localStorage`.
 - **Minimalist Presentation Mode**:
   - Hide controls with the eye button to enter a distraction-free display.
   - Floating trigger button to restore the control bar anytime.
@@ -64,6 +75,7 @@ Then visit `http://localhost:8000` in your browser.
 | **Message Input** | Type into the text bar | Changes the looping banner message in real time. |
 | **BG** | Color Picker | Sets the background display color. |
 | **Text** | Color Picker | Sets the marquee text color. |
+| **Mode** | Dropdown Selector | Toggles between Auto 📱, Rotate 90° ↻, Vertical ↕, Horizontal ↔, and Rotate 270° ↺. |
 | **Font** | Dropdown Selector | Switches between 8 trending and retro font styles. |
 | **Speed** | Dropdown Selector | Adjusts scrolling speed multiplier (0.5x - 2.0x). |
 | **Size** | Dropdown Selector | Scales font size percentage (50% - 200%). |
@@ -79,8 +91,8 @@ Then visit `http://localhost:8000` in your browser.
 ```text
 loop_text/
 ├── index.html        # Semantic HTML5 markup, Google Fonts links, layout
-├── style.css         # Glassmorphism control panel, responsive marquee, font styles
-├── script.js         # Reactive DOM bindings, font scaling, fullscreen logic
+├── style.css         # Glassmorphism control panel, responsive marquee, font styles, 100dvh
+├── script.js         # Reactive DOM bindings, orientation geometry, font scaling, persistence
 ├── package.json      # Project metadata and convenience npm scripts
 ├── .gitignore        # Git ignore rules for OS and environment files
 └── README.md         # Documentation and usage guide
